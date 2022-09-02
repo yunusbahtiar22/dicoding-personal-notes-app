@@ -2,30 +2,17 @@ import React from "react";
 import NoteInput from "../components/NoteInput";
 import NoteCard from "../components/NoteCard";
 
-const NoteBody = ({
-  notes,
-  search,
-  onAddNote,
-  onDeleteNote,
-  onArchiveNote,
-}) => {
-  // const filteredNotes = notes.filter((note) => {
-  //   if (!search) return true;
-  //   else return note?.title?.toLowerCase().includes(search.toLowerCase());
-  // });
+const NoteBody = ({ notes, onAddNote, onDeleteNote, onArchiveNote }) => {
+  const activeNotes = notes.filter((note) => note?.archived === false);
+  const archivedNotes = notes.filter((note) => note?.archived === true);
+  console.log(archivedNotes);
   return (
     <div className="note-app__body">
       <NoteInput onAddHandler={onAddNote} />
       <h2>Catatan Aktif</h2>
       <div className="notes-list">
-        {notes
-          .filter((note) => {
-            if (!search) return true;
-            else
-              return note?.title?.toLowerCase().includes(search.toLowerCase());
-          })
-          .filter((note) => !note?.archived)
-          .map((note) => (
+        {activeNotes &&
+          activeNotes.map((note) => (
             <NoteCard
               note={note}
               onDeleteHandler={onDeleteNote}
@@ -33,17 +20,14 @@ const NoteBody = ({
               key={note?.id}
             />
           ))}
+        {!activeNotes.length && (
+          <p className="notes-list__empty-message">Tidak ada catatan</p>
+        )}
       </div>
       <h2>Arsip</h2>
       <div className="notes-list">
-        {notes
-          .filter((note) => {
-            if (!search) return true;
-            else
-              return note?.title?.toLowerCase().includes(search.toLowerCase());
-          })
-          .filter((note) => note?.archived)
-          .map((note) => (
+        {archivedNotes &&
+          archivedNotes.map((note) => (
             <NoteCard
               note={note}
               onDeleteHandler={onDeleteNote}
@@ -51,6 +35,9 @@ const NoteBody = ({
               key={note?.id}
             />
           ))}
+        {!archivedNotes.length && (
+          <p className="notes-list__empty-message">Tidak ada catatan</p>
+        )}
       </div>
     </div>
   );

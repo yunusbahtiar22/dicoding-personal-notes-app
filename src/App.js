@@ -14,6 +14,14 @@ const App = () => {
   ]);
   const [searchText, setSearchText] = useState("");
 
+  const filteredNotes = notes.filter((note) => {
+    if (!searchText) {
+      return true;
+    } else {
+      return note?.title?.toLowerCase().includes(searchText.toLowerCase());
+    }
+  });
+
   const addNote = (newNote) => {
     setNotes((notes) => notes?.concat(newNote));
   };
@@ -50,7 +58,7 @@ const App = () => {
       </div>
       <NoteBody
         search={searchText}
-        notes={notes}
+        notes={filteredNotes}
         onAddNote={addNote}
         onDeleteNote={deletNote}
         onArchiveNote={archiveNote}
