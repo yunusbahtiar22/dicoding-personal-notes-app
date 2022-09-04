@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 // import Header from "./components/Header";
 import NoteBody from "./containers/NoteBody";
+import seed from "./seed"
 
 const App = () => {
-  const [notes, setNotes] = useState([
-    {
-      id: 1,
-      title: "Babel",
-      body: "Babel merupakan tools open-source yang digunakan untuk mengubah sintaks ECMAScript 2015+ menjadi sintaks yang didukung oleh JavaScript engine versi lama. Babel sering dipakai ketika kita menggunakan sintaks terbaru termasuk sintaks JSX.",
-      archived: false,
-      createdAt: "2022-04-14T04:27:34.572Z",
-    },
-  ]);
+  const [notes, setNotes] = useState([...seed]);
   const [searchText, setSearchText] = useState("");
 
   const filtered = notes.filter((note) => {
